@@ -27,7 +27,8 @@ class ExtendedQuerySet(models.QuerySet):
         select_for_update when getting the object.
         """
         defaults = defaults or {}
-        lookup, params = self._extract_model_params(defaults, **kwargs)
+        lookup = kwargs.copy()
+        params = self._extract_model_params(defaults, **kwargs)
         self._for_write = True
         with transaction.atomic(using=self.db):
             try:
